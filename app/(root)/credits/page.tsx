@@ -43,9 +43,8 @@ const Credits = async () => {
                     className="flex items-center gap-4"
                   >
                     <Image
-                      src={`/assets/icons/${
-                        inclusion.isIncluded ? "check.svg" : "cross.svg"
-                      }`}
+                      src={`/assets/icons/${inclusion.isIncluded ? "check.svg" : "cross.svg"
+                        }`}
                       alt="check"
                       width={24}
                       height={24}

@@ -10,19 +10,27 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
-// ERROR HANDLER
 export const handleError = (error: unknown) => {
   if (error instanceof Error) {
-    // This is a native JavaScript error (e.g., TypeError, RangeError)
-    console.error(error.message);
-    throw new Error(`Error: ${error.message}`);
+    // Check for specific error messages (if applicable)
+    if (error.message.includes('User not found')) {
+      console.error('User not found. Please check the username or ID.');
+      // Optionally throw a custom error for specific handling
+      // throw new Error('UserNotFound');
+    } else if (error.message.includes('Insufficient credits')) {
+      console.error('Insufficient credits to complete the action.');
+      // Handle insufficient credits scenario (e.g., display a message)
+    } else {
+      console.error(error.message, error.stack); // Log for debugging
+      throw new Error(`Error: ${error.message}`);
+    }
   } else if (typeof error === "string") {
     // This is a string error message
     console.error(error);
     throw new Error(`Error: ${error}`);
   } else {
     // This is an unknown type of error
-    console.error(error);
+    console.error('Unknown error:', JSON.stringify(error));
     throw new Error(`Unknown error: ${JSON.stringify(error)}`);
   }
 };
@@ -132,7 +140,7 @@ export const download = (url: string, filename: string) => {
 
 // DEEP MERGE OBJECTS
 export const deepMergeObjects = (obj1: any, obj2: any) => {
-  if(obj2 === null || obj2 === undefined) {
+  if (obj2 === null || obj2 === undefined) {
     return obj1;
   }
 
